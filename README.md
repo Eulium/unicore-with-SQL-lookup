@@ -6,7 +6,9 @@
 Unicore is a method for scalable and accurate phylogenetic reconstruction with structural core genes using Foldseek and ProstT5, universally applicable to any given set of taxa.
 
 This fork replaces the original AlphaFold lookup function with and SQL based one to improve 3Di sequence retival time.
-By utilising DuckDBs join, filter pushdown and multithreading sequence lookup is almost instantaneously without requiring more memory
+Only changes the --afdb-lookup option, searching custom lookup files via --custom-lookup is not affected. 
+By utilising DuckDBs join, filter pushdown and multithreading sequence lookup is almost instantaneously without requiring more memory.
+On the given example data, lookup is reduced from 3 min to 6 sec, reducing Unicore's total runtime by 30%
 
 ## Publications
 Kim, D., Park, S., & Steinegger, M. (2024). Unicore enables scalable and accurate phylogenetic reconstruction with structural core genes. _bioRxiv_, 2024.12.22.629535. [doi.org/10.1101/2024.12.22.629535](https://doi.org/10.1101/2024.12.22.629535)
