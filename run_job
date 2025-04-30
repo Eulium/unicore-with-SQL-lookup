@@ -1,0 +1,88 @@
+#!/bin/bash -l
+#
+# Multithreading example job script for MPCDF Viper.
+# In addition to the Python example shown here, the script
+# is valid for any multi-threaded program, including
+# Matlab, Mathematica, Julia, and similar cases.
+#
+#SBATCH -J example
+#SBATCH -o ./out.%j
+#SBATCH -e ./err.%j
+#SBATCH -D ./
+#SBATCH --ntasks=1            # launch job on
+#SBATCH --cpus-per-task=128   #   8 cores on a shared node
+#SBATCH --mem=480000MB        # memory limit for the job
+#SBATCH --time=12:00:00
+
+micromamba activate unicode
+module purge
+module load gcc/13 impi/2021.11
+TIMEFORMAT=%R
+
+{ time bin/unicore createdb --max-len 4000 --afdb-lookup AFDB/AFDB.pq/ rand_10/ rand_10_out/rand_10 weights/ 2> time.stderr ; } 2>> time_db.csv
+
+{ time bin/unicore createdb --max-len 4000 --afdb-lookup AFDB/AFDB.pq/ rand_20/ rand_20_out/rand_20 weights/ 2> time.stderr ; } 2>> time_db.csv
+
+{ time bin/unicore createdb --max-len 4000  --afdb-lookup AFDB/AFDB.pq/ rand_30/ rand_30_out/rand_30 weights/ 2> time.stderr ; } 2>> time_db.csv
+
+{ time bin/unicore createdb --max-len 4000  --afdb-lookup AFDB/AFDB.pq/ rand_40/ rand_40_out/rand_40 weights/ 2> time.stderr ; } 2>> time_db.csv
+
+{ time bin/unicore createdb --max-len 4000  --afdb-lookup AFDB/AFDB.pq/ rand_50/ rand_50_out/rand_50 weights/ 2> time.stderr ; } 2>> time_db.csv
+
+{ time bin/unicore createdb --max-len 4000  --afdb-lookup AFDB/AFDB.pq/ rand_60/ rand_60_out/rand_60 weights/ 2> time.stderr ; } 2>> time_db.csv
+
+{ time bin/unicore createdb --max-len 4000  --afdb-lookup AFDB/AFDB.pq/ rand_70/ rand_70_out/rand_70 weights/ 2> time.stderr ; } 2>> time_db.csv
+
+{ time bin/unicore createdb --max-len 4000  --afdb-lookup AFDB/AFDB.pq/ rand_80/ rand_80_out/rand_80 weights/ 2> time.stderr ; } 2>> time_db.csv
+
+{ time bin/unicore createdb --max-len 4000  --afdb-lookup AFDB/AFDB.pq/ rand_90/ rand_90_out/rand_90 weights/ 2> time.stderr ; } 2>> time_db.csv
+
+{ time bin/unicore createdb --max-len 4000  --afdb-lookup AFDB/AFDB.pq/ rand_100/ rand_100_out/rand_100 weights/ 2> time.stderr ; } 2>> time_db.csv
+
+{ time bin/unicore createdb --max-len 4000 --afdb-lookup AFDB/AFDB.pq/ rand_10/ rand_10_out/rand_10 weights/ 2> time.stderr ; } 2>> time_db.csv
+
+
+# clustering
+{ time bin/unicore cluster rand_10_out/rand_10 rand_10_clu/clu tmp 2> time.stderr ; } 2>> time_cluster.csv
+
+{ time bin/unicore cluster rand_20_out/rand_20 rand_20_clu/clu tmp 2> time.stderr ; } 2>> time_cluster.csv
+
+{ time bin/unicore cluster rand_30_out/rand_30 rand_30_clu/clu tmp 2> time.stderr ; } 2>> time_cluster.csv
+
+{ time bin/unicore cluster rand_40_out/rand_40 rand_40_clu/clu tmp 2> time.stderr ; } 2>> time_cluster.csv
+
+{ time bin/unicore cluster rand_50_out/rand_50 rand_50_clu/clu tmp 2> time.stderr ; } 2>> time_cluster.csv
+
+{ time bin/unicore cluster rand_60_out/rand_60 rand_60_clu/clu tmp 2> time.stderr ; } 2>> time_cluster.csv
+
+{ time bin/unicore cluster rand_70_out/rand_70 rand_70_clu/clu tmp 2> time.stderr ; } 2>> time_cluster.csv
+
+{ time bin/unicore cluster rand_80_out/rand_80 rand_80_clu/clu tmp 2> time.stderr ; } 2>> time_cluster.csv
+
+{ time bin/unicore cluster rand_90_out/rand_90 rand_90_clu/clu tmp 2> time.stderr ; } 2>> time_cluster.csv
+
+{ time bin/unicore cluster rand_100_out/rand_100 rand_100_clu/clu tmp 2> time.stderr ; } 2>> time_cluster.csv
+
+
+#profiling
+{ time bin/unicore profile rand_10_out/rand_10 rand_10_clu/clu.tsv tmp 2> time.stderr ; } 2>> time_profile.csv
+
+{ time bin/unicore profile rand_20_out/rand_20 rand_20_clu/clu.tsv tmp 2> time.stderr ; } 2>> time_profile.csv
+
+{ time bin/unicore profile rand_30_out/rand_30 rand_30_clu/clu.tsv tmp 2> time.stderr ; } 2>> time_profile.csv
+
+{ time bin/unicore profile rand_40_out/rand_40 rand_40_clu/clu.tsv tmp 2> time.stderr ; } 2>> time_profile.csv
+
+{ time bin/unicore profile rand_50_out/rand_50 rand_50_clu/clu.tsv tmp 2> time.stderr ; } 2>> time_profile.csv
+
+{ time bin/unicore profile rand_60_out/rand_60 rand_60_clu/clu.tsv tmp 2> time.stderr ; } 2>> time_profile.csv
+
+{ time bin/unicore profile rand_70_out/rand_70 rand_70_clu/clu.tsv tmp 2> time.stderr ; } 2>> time_profile.csv
+
+{ time bin/unicore profile rand_80_out/rand_80 rand_80_clu/clu.tsv tmp 2> time.stderr ; } 2>> time_profile.csv
+
+{ time bin/unicore profile rand_90_out/rand_90 rand_90_clu/clu.tsv tmp 2> time.stderr ; } 2>> time_profile.csv
+
+{ time bin/unicore profile rand_100_out/rand_100 rand_100_clu/clu.tsv tmp 2> time.stderr ; } 2>> time_profile.csv
+
+
