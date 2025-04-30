@@ -4,14 +4,22 @@
 [![Bioconda](https://img.shields.io/conda/dn/bioconda/unicore?logo=anaconda)](https://anaconda.org/bioconda/unicore)
 
 Unicore is a method for scalable and accurate phylogenetic reconstruction with structural core genes using Foldseek and ProstT5, universally applicable to any given set of taxa.
-
-This fork replaces the original AlphaFold lookup function with and SQL based one to improve 3Di sequence retival time.
-Only changes the --afdb-lookup option, searching custom lookup files via --custom-lookup is not affected. 
-By utilising DuckDBs join, filter pushdown and multithreading sequence lookup is almost instantaneously without requiring more memory.
-On the given example data, lookup is reduced from 3 min to 6 sec, reducing Unicore's total runtime by 30%
-
 ## Publications
 Kim, D., Park, S., & Steinegger, M. (2024). Unicore enables scalable and accurate phylogenetic reconstruction with structural core genes. _bioRxiv_, 2024.12.22.629535. [doi.org/10.1101/2024.12.22.629535](https://doi.org/10.1101/2024.12.22.629535)
+
+## Unicore-with-SQL
+This **fork** replaces the original AlphaFold database lookup function with and SQL based one to improve 3Di sequence retrival time.
+Only changes the --afdb-lookup option, searching custom lookup files via --custom-lookup is not affected. 
+By utilising DuckDBs join, filter pushdown and multithreading, sequence lookup is almost instantaneously without requiring additional memory.
+This reduces the time createdb spends on sequence lookup from ~4 min to ~6-13 sec, reducing Unicore's overall total runtime by 30%.
+
+<p align="center">
+<img src="https://github.com/user-attachments/assets/f40525ba-13c7-46f9-8e84-26badb2bd38c" width="700">
+  
+<em> Benchmarking used the parameters given in Unicores paper and plts the mean of five repeated measuremnts. Lookup is a subset of the createdb function and only contains the time needed to extract 3Di sequences, excluding the duration of the following ProstT5 prediction. Createdb contains the full time spend on database creation and Unicore measures database creation, clustering and profiling. </em>
+</p>
+
+
 
 ## Table of Contents
 - [Unicore](#unicore)
