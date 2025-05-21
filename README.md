@@ -11,12 +11,13 @@ Kim, D., Park, S., & Steinegger, M. (2024). Unicore enables scalable and accurat
 This **fork** replaces the original AlphaFold database lookup function with and SQL based one to improve 3Di sequence retrival time.
 Only changes the --afdb-lookup option, searching custom lookup files via --custom-lookup is not affected. 
 By utilising DuckDBs join, filter pushdown and multithreading, sequence lookup is almost instantaneously without requiring additional memory.
-This reduces the time createdb spends on sequence lookup from ~4 min to ~6-13 sec, reducing Unicore's overall total runtime by 30%.
+This reduces the time createdb spends on sequence lookup from ~4 min to ~7-20 sec (depending on number of threads,  and sequences), reducing Unicore's overall total runtime by up to 30%.
+Higher number
 
 <p align="center">
-<img src="https://github.com/user-attachments/assets/f40525ba-13c7-46f9-8e84-26badb2bd38c" width="700">
-  
-<em> Benchmarking used the parameters given in Unicores paper and plts the mean of five repeated measuremnts. Lookup is a subset of the createdb function and only contains the time needed to extract 3Di sequences, excluding the duration of the following ProstT5 prediction. Createdb contains the full time spend on database creation and Unicore measures database creation, clustering and profiling. </em>
+<img src="https://github.com/user-attachments/assets/6c8f6245-0768-4dbb-b3f8-00629c86c6f8" width="700">
+
+<em> Benchmarking used the parameters given in Unicores paper, 72 threads and 1 gpu, 10 repeated measuremnts for each sample group. Benchmark measurements Lookup and Lookup-with-sql (subsets of the createdb function) only recorded the time needed to extract 3Di sequences fromn the given AFDB. Unicore and Unicore-with-SQL recored the full analyse process of the given species sets, this includes database creation, clustering and profiling. </em>
 </p>
 
 
