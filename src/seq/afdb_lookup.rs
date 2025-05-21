@@ -61,6 +61,7 @@ fn download_table(path: &String) -> Result<(), Box<dyn std::error::Error>> {
     let AFDB_path = format!("{}{}AFDB.pq", path, SEP);
     let mut stmt = format!(
         r#"
+        SET preserve_insertion_order TO false; 
         COPY
             (
             SELECT 
@@ -72,7 +73,7 @@ fn download_table(path: &String) -> Result<(), Box<dyn std::error::Error>> {
             )
         TO
         '{AFDB_path}'
-        (FORMAT 'parquet', PARTITION_BY hex)
+        (FORMAT 'parquet', PARTITION_BY hex, compression 'zstd');
         ;"#);
     conn.execute_batch(&stmt)?;
 
